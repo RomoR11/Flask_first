@@ -20,5 +20,12 @@ def prom():
     return '<br>'.join(z)
 
 
+@app.route('/image_mars')
+def image_mars():
+    with open('image_mars.html', mode='r', encoding='utf-8') as html_file:
+        data = html_file.read()
+    return data
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080)
