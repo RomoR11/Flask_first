@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
@@ -22,9 +22,12 @@ def prom():
 
 @app.route('/image_mars')
 def image_mars():
-    with open('image_mars.html', mode='r', encoding='utf-8') as html_file:
-        data = html_file.read()
-    return data
+    return render_template('image_mars.html')
+
+
+@app.route('/promotion_image')
+def promotion_image():
+    return render_template('promotion_image.html')
 
 
 if __name__ == '__main__':
