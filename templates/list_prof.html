@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if mk not in ['ul', 'ol'] %}
+        <h1>ОШИБКА! Введён неверный параметр</h1>
+    {%else%}
+        <{{ mk }}>
+        {% for i in list %}
+            <li>{{i}}</li>
+        {%endfor%}
+        <{{ '/' + mk }}>
+    {%endif%}
+{% endblock %}

@@ -31,5 +31,12 @@ def profession(prof):
     return render_template('profession.html', prof=prof)
 
 
+@app.route('/list_prof/<marker>')
+def list_prof(marker):
+    professions = ['Пилот', 'Штурман', 'Врач', 'Повар', 'Инженер-механник', 'Строитель', 'Ученый', 'Айтишник']
+    params = {'list': professions, 'mk': marker}
+    return render_template('list_prof.html', **params)
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080)
