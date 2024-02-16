@@ -38,5 +38,21 @@ def list_prof(marker):
     return render_template('list_prof.html', **params)
 
 
+@app.route('/astronaut_selection', methods=['POST', 'GET'])
+def selection():
+    if request.method == 'GET':
+        return render_template('astronaut_selection.html')
+    elif request.method == 'POST':
+        print(request.form['surname'])
+        print(request.form['name'])
+        print(request.form['email'])
+        print(request.form['education'])
+        print(request.form['sex'])
+        print(request.form['about'])
+        print(request.form['file'])
+        print(request.form['agreement'])
+        return "Форма отправлена"
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080)
