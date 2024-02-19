@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<form>
+    {% for name, field in info.items() %}
+        <div>
+            {{ name + ":" + field }}
+        </div>
+        {% endfor %}
+</form>
+{% endblock %}

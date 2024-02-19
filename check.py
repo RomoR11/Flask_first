@@ -1,6 +1,41 @@
 from flask import Flask, render_template, request
+from flask_wtf import FlaskForm
+from wtforms import StringField, SelectField, BooleanField, SubmitField, FileField, RadioField, SelectMultipleField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'egor-moshennik'
+professions = ['Пилот', 'Штурман', 'Врач', 'Повар', 'Инженер-механник', 'Строитель', 'Ученый', 'Айтишник']
+
+
+class LoginForm(FlaskForm):
+    name = StringField('Имя', validators=[DataRequired()])
+    surname = StringField('Фамилия', validators=[DataRequired()])
+    email = StringField('Адрес почты', validators=[DataRequired()])
+    education = SelectField('Какое у вас образование?', choices=[('Начальное общее', 'Начальное общее'),
+                                                                 ('Основное общее', 'Основное общее'),
+                                                                 ('Среднее общее', 'Среднее общее'),
+                                                                 ('Среднее профессиональное', 'Среднее профессиональное'),
+                                                                 ('Высшее', 'Высшее')])
+    prof = SelectMultipleField('Какие у вас профессии?', choices=[(i, i) for i in professions])
+    sex = RadioField('Выберите пол', choices=[('м', 'Мужской'), ('ж', 'Женский')])
+    about = StringField('Почему вы хотите принять участие в миссии?', validators=[DataRequired()])
+    file = FileField('Приложите фотографию')
+    agreement = BooleanField('Готовы ли остаться на Марсе?', validators=[DataRequired()])
+    submit = SubmitField('Отправить')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+@app.route('/answer')
+@app.route('/auto_answer')
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        info = {'name': form.name.data, 'surname': form.surname.data, 'email': form.email.data,
+                'education': form.education.data, 'prof': form.prof.data, 'sex': form.sex.data,
+                'agreement': form.agreement.data}
+        return render_template('answer.html', info=info)
+    return render_template('boost_selection.html', form=form)
 
 
 @app.route('/<title>')
@@ -33,7 +68,7 @@ def profession(prof):
 
 @app.route('/list_prof/<marker>')
 def list_prof(marker):
-    professions = ['Пилот', 'Штурман', 'Врач', 'Повар', 'Инженер-механник', 'Строитель', 'Ученый', 'Айтишник']
+    global professions
     params = {'list': professions, 'mk': marker}
     return render_template('list_prof.html', **params)
 
