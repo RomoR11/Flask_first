@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
                                                                  ('Среднее общее', 'Среднее общее'),
                                                                  ('Среднее профессиональное', 'Среднее профессиональное'),
                                                                  ('Высшее', 'Высшее')])
-    prof = SelectMultipleField('Какие у вас профессии?', choices=[(i, i) for i in professions])
+    prof = SelectField('Какие у вас профессии?', choices=[(i, i) for i in professions])
     sex = RadioField('Выберите пол', choices=[('м', 'Мужской'), ('ж', 'Женский')])
     about = StringField('Почему вы хотите принять участие в миссии?', validators=[DataRequired()])
     file = FileField('Приложите фотографию')
@@ -26,15 +26,17 @@ class LoginForm(FlaskForm):
 
 
 @app.route('/login', methods=['POST', 'GET'])
-@app.route('/answer')
-@app.route('/auto_answer')
+# @app.route('/answer')
+# @app.route('/auto_answer')
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        info = {'name': form.name.data, 'surname': form.surname.data, 'email': form.email.data,
-                'education': form.education.data, 'prof': form.prof.data, 'sex': form.sex.data,
-                'agreement': form.agreement.data}
-        return render_template('answer.html', info=info)
+        # info = {'name': form.name.data, 'surname': form.surname.data, 'email': form.email.data,
+        #         'education': form.education.data, 'prof': form.prof.data, 'sex': form.sex.data,
+        #         'agreement': 'Согласен' if form.agreement.data else 'Не согласен'}
+        # print(info)
+        # return render_template('answer.html', info=info)
+        return "Форма отправлена"
     return render_template('boost_selection.html', form=form)
 
 
