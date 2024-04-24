@@ -91,5 +91,10 @@ def selection():
         return "Форма отправлена"
 
 
+@app.route('/choice/<string:planet>')
+def choice(planet):
+    return render_template('choice.html', planet=planet)
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080)
