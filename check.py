@@ -26,8 +26,8 @@ class LoginForm(FlaskForm):
 
 
 @app.route('/login', methods=['POST', 'GET'])
-# @app.route('/answer')
-# @app.route('/auto_answer')
+@app.route('/answer')
+@app.route('/auto_answer')
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -97,6 +97,12 @@ def choice(planet):
 @app.route('/results/<nickname>/<int:level>/<float:rating>')
 def results(nickname, level, rating):
     return render_template('results.html', nickname=nickname, level=str(level), rating=str(rating))
+
+
+@app.route('/distribution')
+def distribution():
+    people = ['Ридли Скотт', 'Энди Уир', 'Джон МакАлистер', 'Макс Максбетов', 'Стивен Джобс', 'Уэйн Руни']
+    return render_template('distribution.html', people=people)
 
 
 if __name__ == '__main__':
