@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Цвет стен</th>
+                <th scope="col">Плакат</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% if sex == 'male': %}
+                    {% if years < 21:%}
+                        <td style="background-color: #00BFFF"></td>
+                        <td style="padding: 0;"><img src="/static/img/img_2.png"></td>
+                    {% else %}
+                        <td style="background-color: #000080"></td>
+                        <td style="padding: 0;"><img src="/static/img/img_3.png"></td>
+                    {%endif%}
+                {% elif sex == 'female': %}
+                    {% if years < 21:%}
+                        <td style="background-color: #FF00FF"></td>
+                        <td style="padding: 0;"><img src="/static/img/img_2.png"></td>
+                    {% else %}
+                        <td style="background-color: #800080"></td>
+                        <td style="padding: 0;"><img src="/static/img/img_3.png"></td>
+                    {%endif%}
+                {%endif%}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
