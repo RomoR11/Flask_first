@@ -31,12 +31,11 @@ class LoginForm(FlaskForm):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        # info = {'name': form.name.data, 'surname': form.surname.data, 'email': form.email.data,
-        #         'education': form.education.data, 'prof': form.prof.data, 'sex': form.sex.data,
-        #         'agreement': 'Согласен' if form.agreement.data else 'Не согласен'}
-        # print(info)
-        # return render_template('answer.html', info=info)
-        return "Форма отправлена"
+        info = {'name': form.name.data, 'surname': form.surname.data, 'email': form.email.data,
+                'education': form.education.data, 'prof': form.prof.data, 'sex': form.sex.data,
+                'agreement': 'Согласен' if form.agreement.data else 'Не согласен'}
+        print(info)
+        return render_template('answer.html', info=info)
     return render_template('boost_selection.html', form=form)
 
 
