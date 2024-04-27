@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, BooleanField, SubmitField, FileField, RadioField, SelectMultipleField
 from wtforms.validators import DataRequired
@@ -108,6 +108,18 @@ def distribution():
 @app.route('/table/<sex>/<years>')
 def table(sex, years):
     return render_template('table.html', sex=sex, years=int(years))
+
+
+@app.route('/load_photo', methods=['POST', 'GET'])
+def sample_file_upload():
+    photo = None
+    if request.method == 'GET':
+        return render_template('load_photo.html', photo=photo)
+    elif request.method == 'POST':
+        f = request.files['file']
+        f.save('static/img/' + f.filename)
+        photo = 'static/img/' + f.filename
+        return render_template('load_photo.html', photo=photo)
 
 
 if __name__ == '__main__':
