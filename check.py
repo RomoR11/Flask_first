@@ -122,5 +122,10 @@ def sample_file_upload():
         return render_template('load_photo.html', photo=photo)
 
 
+@app.route('/carousel')
+def carousel():
+    return render_template('carousel.html')
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=8080)
