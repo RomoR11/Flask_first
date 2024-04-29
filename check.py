@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, BooleanField, SubmitField, FileField, RadioField, SelectMultipleField
+from wtforms import StringField, SelectField, BooleanField, SubmitField, FileField, RadioField
 from wtforms.validators import DataRequired
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'egor-moshennik'
 professions = ['Пилот', 'Штурман', 'Врач', 'Повар', 'Инженер-механник', 'Строитель', 'Ученый', 'Айтишник']
+photos = ['img_4.png', 'img_5.png', 'img_6.png', 'img_7.png']
 
 
 class LoginForm(FlaskForm):
@@ -22,6 +24,11 @@ class LoginForm(FlaskForm):
     about = StringField('Почему вы хотите принять участие в миссии?', validators=[DataRequired()])
     file = FileField('Приложите фотографию')
     agreement = BooleanField('Готовы ли остаться на Марсе?', validators=[DataRequired()])
+    submit = SubmitField('Отправить')
+
+
+class GalleryForm(FlaskForm):
+    image = FileField('Добавить картинку')
     submit = SubmitField('Отправить')
 
 
@@ -122,9 +129,16 @@ def sample_file_upload():
         return render_template('load_photo.html', photo=photo)
 
 
-@app.route('/carousel')
+@app.route('/gallery', methods=['POST', 'GET'])
 def carousel():
-    return render_template('carousel.html')
+    form = GalleryForm()
+    if form.validate_on_submit():
+        if form.image.data:
+            filename = secure_filename(form.image.data.filename)
+            form.image.data.save('static/img/' + filename)
+            photos.append(filename)
+        return render_template('carousel.html', photos=photos, form=form)
+    return render_template('carousel.html', photos=photos, form=form)
 
 
 if __name__ == '__main__':
